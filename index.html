@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building a Connected Ecosystem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="starfield" aria-hidden="true"></canvas>
+
+  <main>
+    <section class="section" id="learning">
+      <div class="section-inner">
+        <h2>What We've Built So Far</h2>
+        <div class="stats-grid">
+          <article class="metric aura">
+            <h3>ICARE</h3>
+            <p class="value">13</p>
+            <p class="label">KPIs Activated</p>
+          </article>
+          <article class="metric eureka">
+            <h3>EUREKA</h3>
+            <p class="value">25</p>
+            <p class="label">KPIs Activated</p>
+          </article>
+          <article class="metric total">
+            <h3>Total This Year</h3>
+            <p class="value">38</p>
+            <p class="label">KPIs activated this year — living separately, not connected</p>
+          </article>
+        </div>
+        <p class="closing">These systems are growing independently.</p>
+      </div>
+    </section>
+
+<!-- CURRENT STATE -->
+<section class="section" id="current-state">
+  <div class="section-inner">
+    <h2>Current State: Data Silos</h2>
+    <div class="diagram-wrap panel">
+      <svg
+        class="systems-diagram"
+        id="current-diagram"
+        viewBox="0 0 900 520"
+        role="img"
+        aria-label="Current state diagram showing isolated and partially connected data silos"
+      >
+        <defs>
+          <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#6be38f" />
+          </marker>
+          <marker id="arrow-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#ff6f6f" />
+          </marker>
+        </defs>
+
+        <!-- Labels above nodes -->
+        <text x="150" y="72" text-anchor="middle" class="diagram-label aura-label">Workflow Automation</text>
+        <text x="450" y="72" text-anchor="middle" class="diagram-label eureka-label">Prediction</text>
+        <text x="750" y="72" text-anchor="middle" class="diagram-label icare-label">Freehand Data Analysis</text>
+
+        <!-- AURA node - isolated -->
+        <g class="diagram-node system-node" data-system="AURA" data-description="AURA is fully isolated with no data flowing in or out.">
+          <rect x="60" y="85" width="180" height="90" rx="16" class="node-rect aura-rect" />
+          <text x="150" y="138" text-anchor="middle" class="node-label">AURA</text>
+        </g>
+
+        <!-- No Connection label under AURA -->
+        <text x="150" y="215" text-anchor="middle" class="no-connection-label">No Connection with</text>
+        <text x="150" y="235" text-anchor="middle" class="no-connection-label">Activated Data</text>
+
+        <!-- EUREKA node -->
+        <g class="diagram-node system-node" data-system="EUREKA" data-description="EUREKA receives active data from its own source but has a broken connection from the other source.">
+          <rect x="360" y="85" width="180" height="90" rx="16" class="node-rect eureka-rect" />
+          <text x="450" y="138" text-anchor="middle" class="node-label">EUREKA</text>
+        </g>
+
+        <!-- ICARE node -->
+        <g class="diagram-node system-node" data-system="ICARE" data-description="ICARE receives active data from its own source but has a broken connection from the other source.">
+          <rect x="660" y="85" width="180" height="90" rx="16" class="node-rect icare-rect" />
+          <text x="750" y="138" text-anchor="middle" class="node-label">ICARE</text>
+        </g>
+
+        <!-- Left Activated Data node (below EUREKA) -->
+        <g class="diagram-node system-node" data-system="Activated Data (Left)" data-description="This data source flows actively to EUREKA but has a broken connection to ICARE.">
+          <rect x="360" y="400" width="180" height="70" rx="35" class="node-rect activated-rect" />
+          <text x="450" y="441" text-anchor="middle" class="node-label-sm">Activated Data</text>
+        </g>
+
+        <!-- Right Activated Data node (below ICARE) -->
+        <g class="diagram-node system-node" data-system="Activated Data (Right)" data-description="This data source flows actively to ICARE but has a broken connection to EUREKA.">
+          <rect x="660" y="400" width="180" height="70" rx="35" class="node-rect activated-rect" />
+          <text x="750" y="441" text-anchor="middle" class="node-label-sm">Activated Data</text>
+        </g>
+
+        <!-- Left Activated Data GREEN arrow straight up to EUREKA (flowing) -->
+        <path
+          d="M450,400 L450,175"
+          class="green-arrow"
+          marker-end="url(#arrow-green)"
+        />
+
+        <!-- Left Activated Data RED arrow diagonal to ICARE (stops short - broken) -->
+        <path
+          d="M480,400 L680,280"
+          class="red-arrow-broken"
+          marker-end="url(#arrow-red)"
+        />
+
+        <!-- Right Activated Data GREEN arrow straight up to ICARE (flowing) -->
+        <path
+          d="M750,400 L750,175"
+          class="green-arrow"
+          marker-end="url(#arrow-green)"
+        />
+
+       <!-- Right Activated Data RED arrow diagonal to EUREKA (stops short - broken) -->
+        <path
+          d="M720,400 L520,280"
+          class="red-arrow-broken"
+          marker-end="url(#arrow-red)"
+        />
+    
+
+      </svg>
+
+      <div class="tooltip" id="diagram-tooltip"></div>
+
+      <div class="diagram-legend" aria-label="Current state legend">
+        <span class="legend-item"><span class="legend-swatch active"></span>Green = Active Flow</span>
+        <span class="legend-item"><span class="legend-swatch missing"></span>Red = Broken Connection</span>
+      </div>
+    </div>
+    <p class="explain">AURA remains fully isolated. EUREKA and ICARE each have one active data flow and one broken cross connection.</p>
+  </div>
+</section>
+
+<!-- PROPOSED STATE -->
+<section class="section" id="proposed-state">
+  <div class="section-inner">
+    <h2>Proposed State: Unified Ecosystem</h2>
+    <div class="diagram-wrap panel">
+      <svg
+        class="systems-diagram"
+        id="proposed-diagram"
+        viewBox="0 0 900 500"
+        role="img"
+        aria-label="Proposed state diagram with a single shared data activation layer"
+      >
+        <!-- Labels above nodes -->
+        <text x="150" y="55" text-anchor="middle" class="diagram-label aura-label">Workflow Automation</text>
+        <text x="450" y="55" text-anchor="middle" class="diagram-label eureka-label">Prediction</text>
+        <text x="750" y="55" text-anchor="middle" class="diagram-label icare-label">Freehand Data Analysis</text>
+
+        <!-- AURA node -->
+        <g class="diagram-node system-node" data-system="AURA" data-description="AURA becomes fully connected, receiving data from the shared activation layer.">
+          <rect x="60" y="68" width="180" height="90" rx="16" class="node-rect aura-rect" id="node-aura" />
+          <text x="150" y="121" text-anchor="middle" class="node-label">AURA</text>
+        </g>
+
+        <!-- EUREKA node -->
+        <g class="diagram-node system-node" data-system="EUREKA" data-description="EUREKA connects to the unified data layer and exchanges data across the full ecosystem.">
+          <rect x="360" y="68" width="180" height="90" rx="16" class="node-rect eureka-rect" id="node-eureka" />
+          <text x="450" y="121" text-anchor="middle" class="node-label">EUREKA</text>
+        </g>
+
+        <!-- ICARE node -->
+        <g class="diagram-node system-node" data-system="ICARE" data-description="ICARE joins the shared ecosystem, receiving data from the unified activation layer.">
+          <rect x="660" y="68" width="180" height="90" rx="16" class="node-rect icare-rect" id="node-icare" />
+          <text x="750" y="121" text-anchor="middle" class="node-label">ICARE</text>
+        </g>
+
+        <!-- Static dotted guide lines -->
+        <!-- Trunk line up -->
+        <path
+          id="path-trunk"
+          d="M450,390 L450,280"
+          class="green-arrow-proposed"
+          fill="none"
+        />
+        <!-- Horizontal branch -->
+        <path
+          id="path-horizontal"
+          d="M150,280 L750,280"
+          class="green-arrow-proposed"
+          fill="none"
+        />
+        <!-- Branch to AURA -->
+        <path
+          id="path-aura"
+          d="M150,280 L150,158"
+          class="flow-line-aura"
+          fill="none"
+        />
+        <!-- Branch to EUREKA -->
+        <path
+          id="path-eureka"
+          d="M450,280 L450,158"
+          class="flow-line-eureka"
+          fill="none"
+        />
+        <!-- Branch to ICARE -->
+        <path
+          id="path-icare"
+          d="M750,280 L750,158"
+          class="flow-line-icare"
+          fill="none"
+        />
+
+        <!-- Single Activated Data node centered -->
+        <g class="diagram-node system-node activation-node" data-system="Activated Data" data-description="A single unified data activation layer that feeds all three systems simultaneously.">
+          <rect x="355" y="388" width="190" height="68" rx="35" class="node-rect activated-rect activated-glow" />
+          <text x="450" y="428" text-anchor="middle" class="node-label-sm">Activated Data</text>
+        </g>
+      </svg>
+      <div class="tooltip" id="proposed-tooltip"></div>
+    </div>
+  </div>
+</section>
+
+    <section class="section" id="plan">
+      <div class="section-inner">
+        <h2>What Integration Looks Like</h2>
+        <div class="timeline">
+          <article class="phase">
+            <h3>Phase 1 — Unified Data Strategy <span>(Month 1)</span></h3>
+            <p>ICARE and EUREKA currently have separate data strategies. The first step is building one unified data structure so all three systems can consume the same foundation. This is about preparing data so it is ready to flow.</p>
+          </article>
+          <article class="phase">
+            <h3>Phase 2 — Ecosystem Setup <span>(Month 2–3)</span></h3>
+            <p>Connect pipelines across all three systems. During this phase, new KPI activation will be paused so full focus can go toward integration. If we delay now, data will pile up and integration will take significantly longer later.</p>
+          </article>
+          <article class="phase">
+            <h3>Phase 3 — Go Live <span>(Month 3+)</span></h3>
+            <p>All three systems connected and running as one ecosystem. New data activation resumes on a unified foundation.</p>
+          </article>
+        </div>
+        <aside class="callout">
+          Investing 3 months now saves exponentially more time later. The longer we wait, the more data piles up in silos.
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="questions">
+      <div class="section-inner">
+        <h2>Help Needed?</h2>
+        <div class="help-question-wrap">
+          <p class="help-question">Do you want the data we are activating to flow across all three systems?</p>
+          <div class="help-options">
+            <button type="button" class="help-btn yes-btn" id="btn-yes">Yes</button>
+            <button type="button" class="help-btn no-btn" id="btn-no">No</button>
+          </div>
+          <p class="help-response" id="help-response"></p>
+        </div>
+
+    <section class="section" id="priority-check">
+      <div class="section-inner">
+        <h2>Where Should We Focus First?</h2>
+        <p class="subheading">These are the three workstreams on the table. From my perspective, I want to align my priorities with yours and stay open to your guidance.</p>
+
+        <div class="priority-board" id="priority-board">
+          <article class="priority-card" draggable="true" data-key="aura">
+            <div class="priority-rank">1</div>
+            <h3>AURA Integration</h3>
+            <p>Partner with the AURA team to build a RAG system so data can flow into AURA. Includes SOP reference, Q&amp;A capability, and database context testing.</p>
+            <div class="priority-actions" aria-label="Reorder AURA Integration">
+              <button type="button" class="move-up">Move Up</button>
+              <button type="button" class="move-down">Move Down</button>
+            </div>
+          </article>
+
+          <article class="priority-card" draggable="true" data-key="eureka">
+            <div class="priority-rank">2</div>
+            <h3>EUREKA Enhancement</h3>
+            <p>Support prediction model improvements — hypothesis testing and new model development.</p>
+            <div class="priority-actions" aria-label="Reorder EUREKA Enhancement">
+              <button type="button" class="move-up">Move Up</button>
+              <button type="button" class="move-down">Move Down</button>
+            </div>
+          </article>
+
+          <article class="priority-card" draggable="true" data-key="icare">
+            <div class="priority-rank">3</div>
+            <h3>ICARE Data Activation</h3>
+            <p>Continue activating new KPIs in partnership with auditors to expand data coverage.</p>
+            <div class="priority-actions" aria-label="Reorder ICARE Data Activation">
+              <button type="button" class="move-up">Move Up</button>
+              <button type="button" class="move-down">Move Down</button>
+            </div>
+          </article>
+        </div>
+
+        <p class="priority-note">This is not a solo decision. Your direction shapes the roadmap.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="section footer" id="footer">
+    <div class="section-inner">
+      <p>Open to collaboration and leadership guidance</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
